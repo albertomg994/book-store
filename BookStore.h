@@ -86,6 +86,24 @@ public:
     bool has_book(BookTitle bt) const {
         return _books.contains(bt);
     }
+    
+    /**
+     * Devuelve el número de ejemplares de un libro x que hay disponibles en el
+     * sistema.
+     * Complexity: O(1)
+     *
+     * @throws InvalidArgumentException if book doesn't exist
+     */
+    unsigned get_stock(BookTitle bt) const {
+        
+        HashMap<BookTitle, Book>::ConstIterator it = _books.find(bt);
+        
+        // if book doesn't exist, throw exception
+        if (it == _books.cend()) throw InvalidArgumentException();
+        
+        // return book stock
+        return it.value().stock();
+    }
 };
 
 #endif /* BookStore_h */
