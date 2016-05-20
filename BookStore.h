@@ -52,6 +52,33 @@ public:
             b->add_stock(uds);                                      // O(1)
         }
     }
+    
+    /**
+     * Sell one unit of bt book
+     * Complexity: O(?)
+     *
+     * @param bt Title of the book to be sold
+     * @throws OutOfRangeException si el libro no tiene ejemplares.
+     * @throws InvalidArgumentException si el libro no está dado de alta.
+     */
+    void buy(BookTitle bt) {
+        
+        HashMap<BookTitle, Book>::Iterator it = _books.find(bt);    // O(1)
+        
+        // if book is not present, throw exception
+        if (it == _books.end()) throw InvalidArgumentException();
+        
+        // if book is out of stock, throw exception
+        Book* b = &(it.value());
+        if ( !(b->has_stock()) ) throw OutOfRangeException();
+        
+        // update book sales
+        b->sell_one();                                              // O(1)
+        
+        // update best sellers
+        _best_sellers.update(*b);                                   // O(?)
+    }
+    
     /**
      * Complexity: O(1)
      * @returns true if book is present in the system, even if it is out of stock
