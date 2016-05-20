@@ -88,6 +88,16 @@ public:
     }
     
     /**
+     * Elimina el libro x del sistema. Si el libro no existe la operación no
+     * tiene efecto.
+     * Complejidad: O(1)
+     */
+    void remove_book(BookTitle bt) {
+        // NOTE: what happens if it's present in 'best-sellers'? ---> I think it'll just be updated over time
+        _books.erase(bt);   // O(1)
+    }
+    
+    /**
      * Devuelve el número de ejemplares de un libro x que hay disponibles en el
      * sistema.
      * Complexity: O(1)
