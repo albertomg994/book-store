@@ -25,6 +25,13 @@ private:
     BestSellers _best_sellers;
     
 public:
+    /**
+     * Complexity: O(1)
+     * @returns true if book is present in the system, even if it is out of stock
+     */
+    bool has_book(BookTitle bt) const {
+        return _books.contains(bt);
+    }
 };
 
 #endif /* BookStore_h */
