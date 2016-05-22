@@ -115,6 +115,33 @@ public:
         // return book stock
         return it.value().stock();
     }
+
+    /**
+     * Devuelve una lista con los 10 libros más vendidos. Si hay más de 10 libros
+     * distintos con un máximo número de ventas la aplicación obtiene los 10 de venta
+     * más reciente. Si no se han vendido 10 libros distintos se listarán todos ellos.
+     * La lista estará ordenada por número de ventas primero los más vendidos y los libros
+     * que se hayan vendido el mismo número de veces se ordenan del que tenga la venta más
+     * moderna a la más antigua.
+     * Complejidad: O(..)
+     */
+    /*list<Book> top_n(unsigned int n = 10) {
+        list<Book> ret;
+
+        // Habrá que copiar la lista, no devolverla tal cual.
+
+        return ret;
+    }*/
+
+    list<Book> top_10() {
+        list<Book> ret;
+
+        // ...
+
+        return ret;
+    }
+
+
 };
 
 #endif /* BookStore_h */
