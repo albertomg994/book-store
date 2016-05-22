@@ -26,6 +26,7 @@ private:
 public:
     
     // Constructor
+    Book() {}
     Book(BookTitle t, unsigned units = 0) : _title(t), _stock(units), _sales(0) {}
     
     // Getters
