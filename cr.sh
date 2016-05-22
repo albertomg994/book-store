@@ -8,3 +8,4 @@
 
 g++ -std=c++11 main.cpp -o bookstore
 ./bookstore < test/test-1.in > test/test-1.out
+rm bookstore
