@@ -1,0 +1,18 @@
+17
+nuevoLibro 10 Memorias de Idhún
+nuevoLibro 3 Harry Potter
+nuevoLibro 8 The Passionate Programmer
+estaLibro Memorias de Idhún
+estaLibro The Passionate Programmer
+estaLibro Libro Fantasma
+comprar Harry Potter
+comprar Harry Potter
+comprar Harry Potter
+estaLibro Harry Potter
+nuevoLibro 2 Harry Potter
+comprar Harry Potter
+comprar Harry Potter
+estaLibro Harry Potter
+comprar Harry Potter
+comprar Harry Potter
+comprar Libro Fantasma

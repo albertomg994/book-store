@@ -1,0 +1,10 @@
+9
+elimLibro Harry Potter
+nuevoLibro 0 Harry Potter
+nuevoLibro 2 Memorias de Idhún
+estaLibro Harry Potter
+estaLibro Memorias de Idhún
+elimLibro Harry Potter
+elimLibro Memorias de Idhún
+estaLibro Harry Potter
+estaLibro Memorias de Idhún

@@ -1,0 +1,12 @@
+11
+estaLibro Harry Potter
+estaLibro Memorias de Idhún
+nuevoLibro 0 Harry Potter
+nuevoLibro 2 Memorias de Idhún
+estaLibro Harry Potter
+estaLibro Memorias de Idhún
+numEjemplares Harry Potter
+numEjemplares Memorias de Idhún
+nuevoLibro 4 Harry Potter
+estaLibro Harry Potter
+numEjemplares Harry Potter
