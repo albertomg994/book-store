@@ -10,8 +10,7 @@
 #define BookStoreIO_h
 
 #include "BookStore.h"
-
-using namespace std;
+#include <string>
 
 class BookStoreIO {
 public:
@@ -19,15 +18,15 @@ public:
     static void new_book(BookStore & bs) {
 
         unsigned stock;
-        string title;
+        std::string title;
 
         // read stock
-        cin >> stock; cin.ignore(1);
+        std::cin >> stock; std::cin.ignore(1);
 
         // read title until end of line
-        getline(cin, title);
+        getline(std::cin, title);
 
-        cout << "new_book(" << title << ", " << stock << ")" << endl;
+        //cout << "new_book(" << title << ", " << stock << ")" << endl;
 
         bs.new_book(title, stock);
     }
@@ -37,11 +36,19 @@ public:
         BookTitle title;
 
         // read book title until end of line
-        getline(cin, title);
+        getline(std::cin, title);
 
-        cout << "buy(" << title << ")" << endl;
+        //cout << "buy(" << title << ")" << endl;
+        try {
+            bs.buy(title);
+        } catch (InvalidArgumentException e1) {
+            std::cout << e1.msg() << endl;
+            cout << "---" << endl;
+        } catch (OutOfRangeException e2) {
+            std::cout << e2.msg() << endl;
+            cout << "---" << endl;
+        }
 
-        bs.buy(title);
     }
 
     static void has_book(BookStore & bs) {
@@ -49,11 +56,11 @@ public:
         BookTitle title;
 
         // read book title until end of line
-        getline(cin, title);
+        getline(std::cin, title);
 
-        if(bs.has_book(title)) cout << "El libro " << title << " esta en el sistema" << endl;
-        else cout << "No existe el libro " << title << " en el sistema" << endl;
-        cout << "---" << endl;
+        if(bs.has_book(title)) std::cout << "El libro " << title << " esta en el sistema" << std::endl;
+        else std::cout << "No existe el libro " << title << " en el sistema" << std::endl;
+        std::cout << "---" << std::endl;
     }
 
     static void del_book(BookStore & bs) {
@@ -61,7 +68,7 @@ public:
         BookTitle title;
 
         // read book title until end of line
-        getline(cin, title);
+        getline(std::cin, title);
 
         bs.remove_book(title);
     }
@@ -71,15 +78,15 @@ public:
         BookTitle title;
 
         // read book title until end of line
-        getline(cin, title);
+        getline(std::cin, title);
 
         try {
             unsigned stock = bs.get_stock(title);
-            cout << "Existen " << stock << " ejemplares del libro " << title << endl;
+            std::cout << "Existen " << stock << " ejemplares del libro " << title << std::endl;
         } catch (InvalidArgumentException e) {
-            cout << "No existe el libro " << title << " en el sistema" << endl;
+            std::cout << "No existe el libro " << title << " en el sistema" << std::endl;
         }
-        cout << "---" << endl;
+        std::cout << "---" << std::endl;
     }
 
     /**
@@ -89,15 +96,16 @@ public:
      */
     static void top_10(BookStore & bs) {
 
-        list<Book> top_sellers = bs.top_10();
+        //cout << "top_10()" << endl;
+        list<BookTitle> top_sellers = bs.top_10();
 
-        list<Book>::const_iterator it = top_sellers.cbegin();
+        list<BookTitle>::const_iterator it = top_sellers.cbegin();
         while (it != top_sellers.cend()) {
-            cout << (*it).title() << endl;
+            std::cout << (*it) << std::endl;
             it++;
         }
 
-        cout << "---" << endl;
+        std::cout << "---" << std::endl;
     }
 
     // static void top_n(BookStore & bs) {

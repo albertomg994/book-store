@@ -11,7 +11,8 @@
 
 #include "HashMap.h"
 #include "Book.h"
-#include "BestSellers.h"
+//#include "BestSellers.h"
+#include "BestSellersLineal.h"
 #include "BookStoreExceptions.h"
 #include <list>
 #include <string>
@@ -22,7 +23,8 @@ class BookStore {
 private:
 
     HashMap<BookTitle, Book> _books;
-    BestSellers _best_sellers;
+    // BestSellers _best_sellers;
+    BestSellersLineal _best_sellers;
 
 public:
 
@@ -44,7 +46,8 @@ public:
             _books.insert(bt, Book(bt, uds));                       // O(1)
 
             // we also have to update the best-sellers (maybe best-seller has 0 sales...)
-            _best_sellers.update(_books[bt]);
+            //_best_sellers.update(_books[bt]);
+            _best_sellers.update(&(_books[bt]));
         }
 
         // otherwise, add 'uds' units to its stock
@@ -77,7 +80,8 @@ public:
         b->sell_one();                                              // O(1)
 
         // update best sellers
-        _best_sellers.update(*b);                                   // O(?)
+        _best_sellers.update(b);
+        //_best_sellers.update(*b);                                   // O(?)
     }
 
     /**
@@ -95,7 +99,12 @@ public:
      */
     void remove_book(BookTitle bt) {
         // NOTE: what happens if it's present in 'best-sellers'? ---> I think it'll just be updated over time
-        _books.erase(bt);   // O(1)
+        
+        // TODO: evitar la búsqueda dos veces, juntar las dos líneas en una misma búsqueda
+        if (_books.contains(bt)) {
+            _best_sellers.remove_bestseller(bt);
+            _books.erase(bt);   // O(1)
+        }
     }
 
     /**
@@ -133,12 +142,8 @@ public:
         return ret;
     }*/
 
-    list<Book> top_10() {
-        list<Book> ret;
-
-        // ...
-
-        return ret;
+    list<BookTitle> top_10() {
+        return _best_sellers.get_bestsellers();
     }
 
 
