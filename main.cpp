@@ -15,14 +15,14 @@ int main(int argc, const char * argv[]) {
     unsigned int num_ops;
     string operacion;
 
-    BookStore bs;
-
     // Read number of operations in first case
     cin >> num_ops;
     cin.ignore();
 
     // For each set of operations
     while (!cin.eof()) {
+        
+        BookStore bs;
 
         for (int i = 0; i < num_ops; i++) {
 
