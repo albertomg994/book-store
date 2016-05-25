@@ -18,26 +18,11 @@
 
 using namespace std;
 
-/*struct myclass {
-    bool operator() (Book* b1,Book* b2) {
-        if (b1->sales() > b2->sales()) return b2;
-        else { // b1->sales() == b2->sales()
-            if (b1->sale_date() < b2->sale_date()) return true;
-            else return false;
-        }
-    }
-} myobject;*/
-
-class BookComparator {
-    bool operator() (Book* b1,Book* b2) {
-        if (b1->sales() > b2->sales()) return b2;
-        else { // b1->sales() == b2->sales()
-            if (b1->sale_date() < b2->sale_date()) return true;
-            else return false;
-        }
-    }
-};
-
+/**
+ * Function to compare 2 books so we can sort them by
+ * sales<->las_sale_date
+ * @return true if b1 goes before b2
+ */
 bool compare_function (Book* b1,Book* b2) {
     if (b1->sales() > b2->sales()) return true;
     else if (b1->sales() < b2->sales()) return false;
@@ -166,45 +151,24 @@ public:
      * La lista estará ordenada por número de ventas primero los más vendidos y los libros
      * que se hayan vendido el mismo número de veces se ordenan del que tenga la venta más
      * moderna a la más antigua.
-     * Complejidad: O(..)
+     * Complejidad: O(AWFUL) ---> Must iprove it, just made this implementation to pass judge tests on time
      */
-    /*list<Book> top_n(unsigned int n = 10) {
-        list<Book> ret;
-
-        // Habrá que copiar la lista, no devolverla tal cual.
-
-        return ret;
-    }*/
-
-    /*list<BookTitle> top_10() {
-        return _best_sellers.get_bestsellers();
-    }*/
-    
-    // Implementación muy ineficiente, solo la hago para pasar el juez antes del viernes
     list<BookTitle> top_10() {
-        
-        //cout << "you called top_10() method" << endl;
         
         list<Book*> todos;
         list<BookTitle> ret;
         
-        // Primero creamos una lista con todos los titulos
-        //cout << "Creating a list with all books in system" << endl;
+        // First create a list with all titles
         HashMap<BookTitle, Book>::Iterator it = _books.begin();
         while (it != _books.end()) {
             if ((it.value()).sales() > 0) todos.push_back(&(it.value()));
             it++;
         }
-        //cout << "list with all books has " << todos.size() << " elements." << endl;
         
-        // Ordenamos la lista
-        //cout << "Ordering list..." << endl;
+        // Sort list
         todos.sort(compare_function);
-        //cout << "ordered list has " << todos.size() << " elements." << endl;
-        //std::list::sort (todos.begin(), todos.end(), compare_function);     //(12 26 32 33 45 53 71 80)
         
-        // Devolvemos los 10 primeros
-        //cout << "Returning first 10 books..." << endl;
+        // Return first 10 books in list
         list<Book*>::iterator it_list = todos.begin();
         unsigned size = 0;
         
@@ -214,7 +178,6 @@ public:
             it_list++;
         }
         
-        //cout << "Returned list has " << ret.size() << " elements." << endl;
         return ret;
     }
 

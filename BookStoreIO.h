@@ -26,8 +26,6 @@ public:
         // read title until end of line
         getline(std::cin, title);
 
-        //cout << "new_book(" << title << ", " << stock << ")" << endl;
-
         bs.new_book(title, stock);
     }
 
@@ -38,7 +36,6 @@ public:
         // read book title until end of line
         getline(std::cin, title);
 
-        //cout << "buy(" << title << ")" << endl;
         try {
             bs.buy(title);
         } catch (InvalidArgumentException e1) {
@@ -96,7 +93,6 @@ public:
      */
     static void top_10(BookStore & bs) {
 
-        //cout << "top_10()" << endl;
         list<BookTitle> top_sellers = bs.top_10();
 
         list<BookTitle>::const_iterator it = top_sellers.cbegin();
