@@ -11,7 +11,6 @@
 
 #include "HashMap.h"
 #include "Book.h"
-#include "BestSellersLineal.h"
 #include "BookStoreExceptions.h"
 #include <list>
 #include <string>
@@ -36,7 +35,6 @@ class BookStore {
 private:
 
     HashMap<BookTitle, Book> _books;
-    BestSellersLineal _best_sellers;
     SaleDate _next_date;
 
 public:
@@ -63,9 +61,6 @@ public:
         if (it == _books.end()) {
             _books.insert(bt, Book(bt, _next_date, uds));                       // O(1)
             _next_date++;
-
-            // we also have to update the best-sellers (maybe best-seller has 0 sales...)
-            _best_sellers.update(&(_books[bt]));
         }
 
         // otherwise, add 'uds' units to its stock
@@ -97,10 +92,6 @@ public:
         // update book sales
         b->sell_one(_next_date);                                              // O(1)
         _next_date++;
-
-        // update best sellers
-        _best_sellers.update(b);
-        //_best_sellers.update(*b);                                   // O(?)
     }
 
     /**
@@ -121,7 +112,6 @@ public:
         
         // TODO: evitar la búsqueda dos veces, juntar las dos líneas en una misma búsqueda
         if (_books.contains(bt)) {
-            _best_sellers.remove_bestseller(bt);
             _books.erase(bt);   // O(1)
         }
     }

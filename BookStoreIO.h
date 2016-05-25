@@ -11,6 +11,7 @@
 
 #include "BookStore.h"
 #include <string>
+#include <iostream>
 
 class BookStoreIO {
 public:
