@@ -306,10 +306,42 @@ No existe el libro Memorias de Idhún en el sistema
 * Los libros que estaban en el top-10 pero se han eliminado, no deben aparecer
 * Si no se han vendido todavía 10 libros, se listarán todos ellos
 * Comprobar que no aparecen mas de 10 libros
+* Ver que los empates entre compras se resuelven correctamente
 
 #### Formato de salida
 
 ```
+top10
+nuevoLibro 10 rank1
+nuevoLibro 10 rank2
+nuevoLibro 10 rank3
+nuevoLibro 10 rank4
+nuevoLibro 10 rank5
+nuevoLibro 10 rank6
+nuevoLibro 10 rank7
+nuevoLibro 10 rank8
+nuevoLibro 10 rank9
+nuevoLibro 10 rank10
+nuevoLibro 10 rank11
+nuevoLibro 10 rank12
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+comprar rank1
+
 ```
+
+```
+---
+
+------
+```
+
 
 #### Casos

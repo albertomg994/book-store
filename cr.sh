@@ -74,6 +74,15 @@ cd numEjemplares
 diff test-1.out test-1.out.sample
 cd ..
 
+# Ejecutar tests de top10
+
+echo "Ejecutando tests de top10"
+
+cd top10
+../../bookstore < test-1.in > test-1.out
+diff test-1.out test-1.out.sample
+cd ..
+
 # Volver al directorio raíz del programa
 # -------------------------------------------
 cd ..
