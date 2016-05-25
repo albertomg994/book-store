@@ -6,28 +6,29 @@
 #  Created by Alberto Miedes on 21/5/16.
 #  Copyright © 2016 Alberto Miedes. All rights reserved.
 
+# Compilar
 g++ -std=c++11 main.cpp -o bookstore
 
-# Ejecutar tests mezcla
-# -------------------------------------------
-
-echo "Ejecutando tests mezcla..."
-
-./bookstore < test/test-1.in > test/test-1.out
-diff test/test-1.out test/test-1.out.sample
-
-./bookstore < test/test-2.in > test/test-2.out
-diff test/test-2.out test/test-2.out.sample
-
-./bookstore < test/test-3.in > test/test-3.out
-diff test/test-3.out test/test-3.out.sample
-
-
-# Entramos en la carpeta de tests específicos
-# -------------------------------------------
+# Entrar en la carpeta de tests
 cd test
 
-echo "Ejecutando tests específicos..."
+# Ejecutar todos los test
+# -------------------------------------------
+
+# Ejecutar tests mezcla
+echo "Ejecutando tests mezcla..."
+cd varios
+
+../../bookstore < test-1.in > test-1.out
+diff test-1.out test-1.out.sample
+
+../../bookstore < test-2.in > test-2.out
+diff test-2.out test-2.out.sample
+
+../../bookstore < test-3.in > test-3.out
+diff test-3.out test-3.out.sample
+
+cd ..
 
 # Ejecutar tests de nuevoLibro
 
