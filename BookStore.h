@@ -11,32 +11,18 @@
 
 #include "HashMap.h"
 #include "Book.h"
-#include "BestSellersLineal.h"
+#include "BestSellersTree.h"
 #include "BookStoreExceptions.h"
 #include <list>
 #include <string>
 
 using namespace std;
 
-/**
- * Function to compare 2 books so we can sort them by
- * sales<->las_sale_date
- * @return true if b1 goes before b2
- */
-bool compare_function (Book* b1,Book* b2) {
-    if (b1->sales() > b2->sales()) return true;
-    else if (b1->sales() < b2->sales()) return false;
-    else { // b1->sales() == b2->sales()
-        if (b1->sale_date() > b2->sale_date()) return true;
-        else return false;
-    }
-}
-
 class BookStore {
 private:
 
     HashMap<BookTitle, Book> _books;
-    BestSellersLineal _best_sellers;
+    BestSellersTree _bestsellers;
     SaleDate _next_date;
 
 public:
@@ -49,7 +35,7 @@ public:
     /**
      * Adds new book to the system with 'uds' units, or adds 'uds' units
      * if the book already exists.
-     * Complexity: O(..)
+     * Complexity: O(1)
      *
      * @param bt Book title
      * @param uds Units to be added into stock
@@ -61,11 +47,8 @@ public:
 
         // if it's not present, add it to the system
         if (it == _books.end()) {
-            _books.insert(bt, Book(bt, _next_date, uds));                       // O(1)
+            _books.insert(bt, Book(bt, _next_date, uds));           // O(1)
             _next_date++;
-
-            // we also have to update the best-sellers (maybe best-seller has 0 sales...)
-            _best_sellers.update(&(_books[bt]));
         }
 
         // otherwise, add 'uds' units to its stock
@@ -95,12 +78,13 @@ public:
         if ( !(b->has_stock()) ) throw OutOfRangeException();
 
         // update book sales
+        _bestsellers.remove_book(&(_books[bt]));
+
         b->sell_one(_next_date);                                              // O(1)
         _next_date++;
 
         // update best sellers
-        _best_sellers.update(b);
-        //_best_sellers.update(*b);                                   // O(?)
+        _bestsellers.add_book(&(_books[bt]));                       // O(n), n = books with > than 0 sales
     }
 
     /**
@@ -117,11 +101,8 @@ public:
      * Complejidad: O(1)
      */
     void remove_book(BookTitle bt) {
-        // NOTE: what happens if it's present in 'best-sellers'? ---> I think it'll just be updated over time
-        
-        // TODO: evitar la búsqueda dos veces, juntar las dos líneas en una misma búsqueda
         if (_books.contains(bt)) {
-            _best_sellers.remove_bestseller(bt);
+            _bestsellers.remove_book(&(_books[bt]));    // remove book from bestsellers
             _books.erase(bt);   // O(1)
         }
     }
@@ -145,13 +126,22 @@ public:
     }
 
     /**
-     * Devuelve una lista con los 10 libros más vendidos. Si hay más de 10 libros
-     * distintos con un máximo número de ventas la aplicación obtiene los 10 de venta
-     * más reciente. Si no se han vendido 10 libros distintos se listarán todos ellos.
-     * La lista estará ordenada por número de ventas primero los más vendidos y los libros
-     * que se hayan vendido el mismo número de veces se ordenan del que tenga la venta más
-     * moderna a la más antigua.
-     * Complejidad: O(AWFUL) ---> Must iprove it, just made this implementation to pass judge tests on time
+     * Returns list with titles of top N sold books.
+     *  - If two books have the same sales, the most-recently bought one appears first.
+     *  - If there are less than N books in the system, all of them will appear in the list.
+     *  - Books with zero sales never appear in the list.
+     * Complexity: O(n)
+     */
+    list<BookTitle> top_n(unsigned n) {
+        return _bestsellers.get_top_n(n);
+    }
+    
+    /**
+     * Fixed size equivalente of the top_n() upper method.
+     * This method should never be used since the upper one is more flexible and
+     * more efficient. I just keep this implementation because it's different
+     * from the upper one and it's the firt one I did.
+     * Complexity: awful
      */
     list<BookTitle> top_10() {
         
@@ -180,7 +170,21 @@ public:
         
         return ret;
     }
-
+    
+    /**
+     * Function to compare 2 books so we can sort them by
+     * sales<->las_sale_date
+     * @return true if b1 goes before b2
+     */
+    static bool compare_function (Book* b1,Book* b2) {
+        if (b1->sales() > b2->sales()) return true;
+        else if (b1->sales() < b2->sales()) return false;
+        else { // b1->sales() == b2->sales()
+            if (b1->sale_date() > b2->sale_date()) return true;
+            else return false;
+        }
+    }
+    
 };
 
 #endif /* BookStore_h */

@@ -93,7 +93,7 @@ public:
      */
     static void top_10(BookStore & bs) {
 
-        list<BookTitle> top_sellers = bs.top_10();
+        list<BookTitle> top_sellers = bs.top_n(10);
 
         list<BookTitle>::const_iterator it = top_sellers.cbegin();
         while (it != top_sellers.cend()) {
@@ -103,10 +103,6 @@ public:
 
         std::cout << "---" << std::endl;
     }
-
-    // static void top_n(BookStore & bs) {
-    //     ...
-    // }
 
     static void error() {
         // print nothing
