@@ -11,7 +11,7 @@
 
 #include "HashMap.h"
 #include "Book.h"
-#include "BestSellersTree.h"
+#include "BestSellers.h"
 #include "BookStoreExceptions.h"
 #include <list>
 #include <string>
@@ -21,9 +21,9 @@ using namespace std;
 class BookStore {
 private:
 
-    HashMap<BookTitle, Book> _books;
-    BestSellersTree _bestsellers;
-    SaleDate _next_date;
+    HashMap<BookTitle, Book> _books;    // data structure which contains the books in the store
+    BestSellers _bestsellers;           // data structure that keeps track of most-sold books
+    SaleDate _next_date;                // counter used to resolve ties between books with same number of sales
 
 public:
 
@@ -60,7 +60,7 @@ public:
 
     /**
      * Sell one unit of bt book
-     * Complexity: O(?)
+     * Complexity: O( max(logN), m ), m = _books.size, N = books with (sales > 0)
      *
      * @param bt Title of the book to be sold
      * @throws OutOfRangeException si el libro no tiene ejemplares.
@@ -78,13 +78,13 @@ public:
         if ( !(b->has_stock()) ) throw OutOfRangeException();
 
         // update book sales
-        _bestsellers.remove_book(&(_books[bt]));
+        _bestsellers.remove_book(&(_books[bt]));                    // O(logN), N = books with (sales > 0)
 
-        b->sell_one(_next_date);                                              // O(1)
+        b->sell_one(_next_date);                                    // O(1)
         _next_date++;
 
         // update best sellers
-        _bestsellers.add_book(&(_books[bt]));                       // O(n), n = books with > than 0 sales
+        _bestsellers.add_book(&(_books[bt]));                       // O(logN), N = books with (sales > 0)
     }
 
     /**
